@@ -1,12 +1,15 @@
-import { BloggersList } from "./components/BloggersList";
 import { Header } from "./components/Header";
+//redux
+import { Provider } from "react-redux";
+import store from "./store";
+import BloggersList from "./components/BloggersList";
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <Header />
       <BloggersList />
-    </div>
+    </Provider>
   );
 }
 

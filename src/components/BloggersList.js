@@ -1,40 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { fetchAllBloggers } from "../store/slices";
+import { useDispatch, useSelector } from "react-redux";
 
-export const BloggersList = () => {
-  const bloggers = [
-    {
-      id: "1",
-      name: "Juan Perez",
-      website: "juanperez.io",
-      picture_url: "https://placekitten.com/200/300",
-      email: "conact@juanperez.io",
-      friends: [],
-    },
-    {
-      id: "2",
-      name: "Amano Pikamee",
-      website: "pikamee.io",
-      picture_url: "https://placekitten.com/200/300",
-      email: "contact@pikamee.io",
-      friends: ["1"],
-    },
-    {
-      id: "3",
-      name: "Tony Stark",
-      website: "tonystark.io",
-      picture_url: "https://placekitten.com/200/300",
-      email: "contact@tonystark.io",
-      friends: ["1", "2"],
-    },
-  ];
+const BloggersList = () => {
+  const dispatch = useDispatch();
+  const { list } = useSelector((state) => state.bloggers);
+
+  useEffect(() => {
+    dispatch(fetchAllBloggers());
+  }, [dispatch]);
+
   return (
-    <div className="container">
+    <div className="container mt-4">
       <div className="row">
-        {bloggers.map((blogger, index) => (
-          <div key={index} className="col-md-3">
+        {list.map((blogger, index) => (
+          <div key={index} className="col-md-3 mt-4 card">
             <div className="card-body">
-              <img className="m-2" src={blogger.picture_url} alt="avatar"></img>
-              <h5 className="card-title">{blogger.name}</h5>
+              <img
+                className="card-img-top"
+                src={blogger.avatar}
+                alt="avatar"
+              ></img>
+              <h5 className="card-title">{`${blogger.first_name} ${blogger.last_name}`}</h5>
               <p className="card-text">{blogger.email} </p>
             </div>
           </div>
@@ -43,3 +30,5 @@ export const BloggersList = () => {
     </div>
   );
 };
+
+export default BloggersList;
